@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HARUBAG — Luxury Handbag Rental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #B8975A;
+      --gold-light: #D4B882;
+      --gold-pale: #F5EDD8;
+      --cream: #FAF8F4;
+      --deep: #1A1714;
+      --charcoal: #2C2820;
+      --muted: #7A7168;
+      --border: rgba(184,151,90,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Raleway', sans-serif; background: var(--cream); color: var(--deep); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 60px;
+      border-bottom: 0.5px solid var(--border);
+      background: var(--cream);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; letter-spacing: 0.25em; color: var(--deep); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--charcoal); text-decoration: none; font-weight: 400; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .btn-ghost { font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; background: none; border: 0.5px solid var(--gold); color: var(--gold); padding: 9px 22px; cursor: pointer; transition: all 0.3s; }
+    .btn-ghost:hover { background: var(--gold); color: var(--cream); }
+    .btn-solid { font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--deep); border: 0.5px solid var(--deep); color: var(--cream); padding: 9px 22px; cursor: pointer; transition: all 0.3s; }
+    .btn-solid:hover { background: var(--gold); border-color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 74px); overflow: hidden; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 60px; position: relative; }
+    .hero-left::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; font-weight: 400; }
+    .hero-headline { font-family: 'Cormorant Garamond', serif; font-size: 68px; line-height: 1.05; font-weight: 300; color: var(--deep); margin-bottom: 28px; }
+    .hero-headline em { font-style: italic; color: var(--gold); }
+    .hero-sub { font-size: 13px; line-height: 1.9; color: var(--muted); font-weight: 300; max-width: 400px; margin-bottom: 48px; letter-spacing: 0.03em; }
+    .hero-cta { display: flex; gap: 16px; align-items: center; margin-bottom: 60px; }
+    .btn-primary { font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; background: var(--gold); color: var(--cream); border: none; padding: 15px 38px; cursor: pointer; transition: all 0.3s; }
+    .btn-primary:hover { background: var(--charcoal); }
+    .btn-text { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: color 0.3s; font-family: 'Raleway', sans-serif; }
+    .btn-text::after { content: '→'; font-size: 14px; transition: transform 0.3s; letter-spacing: 0; }
+    .btn-text:hover { color: var(--gold); }
+    .btn-text:hover::after { transform: translateX(4px); }
+    .hero-stats { display: flex; gap: 44px; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 300; color: var(--deep); line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .stat-divider { width: 0.5px; background: var(--border); }
+
+    .hero-right { position: relative; background: #1A1714; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(184,151,90,0.08) 0%, transparent 60%), radial-gradient(circle at 20% 80%, rgba(184,151,90,0.05) 0%, transparent 50%); }
+    .hero-img-grid { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; padding: 40px; }
+    .img-card { border-radius: 2px; overflow: hidden; position: relative; background: var(--charcoal); display: flex; align-items: center; justify-content: center; transition: transform 0.6s; }
+    .img-card:hover { transform: scale(1.02); }
+    .img-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .img-card:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+    .img-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+    .bag-label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(26,23,20,0.88); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+    .bag-brand { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); }
+    .bag-price { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; color: var(--cream); }
+    .hero-badge { position: absolute; top: 52px; right: 52px; width: 88px; height: 88px; border-radius: 50%; border: 0.5px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-direction: column; z-index: 10; }
+    .badge-text-top { font-size: 7px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+    .badge-main { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--cream); line-height: 1; }
+    .badge-sub { font-size: 7px; letter-spacing: 0.1em; color: var(--gold-light); text-transform: uppercase; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); padding: 14px 0; overflow: hidden; background: var(--cream); }
+    .marquee-inner { display: flex; white-space: nowrap; animation: marquee 30s linear infinite; }
+    .marquee-item { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); padding: 0 36px; display: flex; align-items: center; gap: 14px; }
+    .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); display: inline-block; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    .section { padding: 96px 60px; }
+    .section-eyebrow { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; text-align: center; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 300; text-align: center; color: var(--deep); margin-bottom: 14px; line-height: 1.15; }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub { text-align: center; font-size: 12px; color: var(--muted); letter-spacing: 0.05em; line-height: 1.8; max-width: 480px; margin: 0 auto 68px; font-weight: 300; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+    .steps::before { content: ''; position: absolute; top: 32px; left: 10%; right: 10%; height: 0.5px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+    .step { text-align: center; padding: 0 20px; }
+    .step-num { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); letter-spacing: 0.1em; width: 64px; height: 64px; border: 0.5px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; position: relative; z-index: 1; background: var(--cream); }
+    .step-title { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--deep); margin-bottom: 14px; font-weight: 500; }
+    .step-desc { font-size: 12px; color: var(--muted); line-height: 1.8; font-weight: 300; }
+
+    /* ── FEATURED ── */
+    .featured-section { background: var(--deep); padding: 96px 60px; }
+    .featured-section .section-eyebrow { color: var(--gold-light); }
+    .featured-section .section-title { color: var(--cream); }
+    .featured-section .section-sub { color: rgba(250,248,244,0.4); }
+    .bags-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto; gap: 2px; }
+    .bag-card-f { position: relative; overflow: hidden; cursor: pointer; background: var(--charcoal); transition: all 0.5s; }
+    .bag-card-f:hover .bco { opacity: 1; }
+    .bag-card-f:hover .bci { transform: scale(1.04); }
+    .bag-card-f:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+    .bci { width: 100%; height: 100%; min-height: 260px; display: flex; align-items: center; justify-content: center; transition: transform 0.6s; background: var(--charcoal); }
+    .bco { position: absolute; inset: 0; background: rgba(26,23,20,0.6); opacity: 0; transition: opacity 0.4s; display: flex; align-items: center; justify-content: center; }
+    .overlay-btn { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream); border: 0.5px solid var(--cream); padding: 11px 26px; background: none; cursor: pointer; font-family: 'Raleway', sans-serif; }
+    .bag-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 22px; background: linear-gradient(to top, rgba(26,23,20,0.95), transparent); }
+    .bag-info-brand { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .bag-info-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; color: var(--cream); margin-bottom: 7px; }
+    .bag-info-row { display: flex; justify-content: space-between; align-items: center; }
+    .bag-info-price { font-size: 11px; letter-spacing: 0.1em; color: var(--gold-light); }
+    .bag-info-duration { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(250,248,244,0.45); }
+
+    /* ── WHY ── */
+    .why-section { padding: 96px 60px; background: var(--gold-pale); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .why-features { display: flex; flex-direction: column; gap: 36px; }
+    .why-item { display: flex; gap: 24px; align-items: flex-start; }
+    .why-icon { width: 44px; height: 44px; flex-shrink: 0; border: 0.5px solid var(--gold); display: flex; align-items: center; justify-content: center; }
+    .why-item-title { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--deep); margin-bottom: 8px; font-weight: 500; }
+    .why-item-desc { font-size: 12px; color: var(--muted); line-height: 1.8; font-weight: 300; }
+    .why-visual { aspect-ratio: 4/5; }
+    .why-visual-card { width: 100%; height: 100%; background: var(--deep); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .why-visual-card::before { content: ''; position: absolute; inset: 20px; border: 0.5px solid rgba(184,151,90,0.15); }
+    .why-accent { position: absolute; top: 28px; right: 28px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border: 0.5px solid var(--gold); padding: 7px 14px; }
+
+    /* ── DUAL CTA ── */
+    .lender-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .lender-card { padding: 68px 56px; display: flex; flex-direction: column; justify-content: space-between; min-height: 380px; }
+    .lender-card-left { background: var(--deep); }
+    .lender-card-right { background: var(--gold); }
+    .lender-tag { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 28px; font-weight: 400; }
+    .lender-card-left .lender-tag { color: var(--gold); }
+    .lender-card-right .lender-tag { color: rgba(26,23,20,0.55); }
+    .lender-heading { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; line-height: 1.1; margin-bottom: 20px; }
+    .lender-card-left .lender-heading { color: var(--cream); }
+    .lender-card-right .lender-heading { color: var(--deep); }
+    .lender-desc { font-size: 12px; line-height: 1.9; font-weight: 300; margin-bottom: 44px; }
+    .lender-card-left .lender-desc { color: rgba(250,248,244,0.5); }
+    .lender-card-right .lender-desc { color: rgba(26,23,20,0.6); }
+    .btn-white { font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; background: var(--cream); color: var(--deep); border: none; padding: 15px 34px; cursor: pointer; width: fit-content; transition: all 0.3s; }
+    .btn-white:hover { background: var(--gold-pale); }
+    .btn-dark { font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; background: var(--deep); color: var(--cream); border: none; padding: 15px 34px; cursor: pointer; width: fit-content; transition: all 0.3s; }
+    .btn-dark:hover { background: var(--charcoal); }
+
+    /* ── PRODUCT GRID PAGE ── */
+    #collection { background: var(--cream); padding-top: 0; }
+    .pg-head { padding: 52px 60px 28px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .pg-eyebrow { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .pg-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: var(--deep); line-height: 1.1; }
+    .pg-title em { font-style: italic; color: var(--gold); }
+    .pg-count { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+    .filters { padding: 0 60px 28px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .filter-btn { font-family: 'Raleway', sans-serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; background: none; border: 0.5px solid var(--border); color: var(--muted); padding: 8px 18px; cursor: pointer; transition: all 0.25s; }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); }
+    .filter-btn.active { background: var(--gold); color: var(--cream); }
+    .filter-divider { width: 0.5px; height: 20px; background: var(--border); margin: 0 4px; }
+    .sort-select { font-family: 'Raleway', sans-serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; background: none; border: 0.5px solid var(--border); color: var(--muted); padding: 8px 14px; cursor: pointer; margin-left: auto; outline: none; }
+    .bag-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 0 60px 80px; }
+
+    /* ── PRODUCT CARD ── */
+    .bag-card { background: #fff; position: relative; cursor: pointer; overflow: hidden; border: 0.5px solid transparent; transition: border-color 0.3s; animation: fadeUp 0.5s ease both; }
+    .bag-card:hover { border-color: var(--gold); }
+    .bag-card:hover .card-img-inner { transform: scale(1.04); }
+    .bag-card:hover .card-actions { opacity: 1; transform: translateY(0); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .bag-card:nth-child(1){animation-delay:.05s}.bag-card:nth-child(2){animation-delay:.1s}
+    .bag-card:nth-child(3){animation-delay:.15s}.bag-card:nth-child(4){animation-delay:.2s}
+    .bag-card:nth-child(5){animation-delay:.25s}.bag-card:nth-child(6){animation-delay:.3s}
+    .bag-card:nth-child(7){animation-delay:.35s}.bag-card:nth-child(8){animation-delay:.4s}
+    .bag-card:nth-child(9){animation-delay:.45s}.bag-card:nth-child(10){animation-delay:.5s}
+    .bag-card:nth-child(11){animation-delay:.55s}.bag-card:nth-child(12){animation-delay:.6s}
+    .card-img { aspect-ratio: 3/4; overflow: hidden; position: relative; background: #F0EBE3; }
+    .card-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform 0.6s; }
+    .card-badge { position: absolute; top: 12px; left: 12px; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 10px; font-weight: 400; }
+    .badge-new { background: var(--deep); color: var(--cream); }
+    .badge-hot { background: var(--gold); color: var(--cream); }
+    .badge-few { background: var(--charcoal); color: var(--gold-light); }
+    .card-wish { position: absolute; top: 10px; right: 12px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: rgba(250,248,244,0.85); border: none; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+    .card-wish:hover { background: var(--cream); }
+    .card-actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px; background: rgba(26,23,20,0.92); display: flex; gap: 8px; opacity: 0; transform: translateY(8px); transition: all 0.3s; }
+    .btn-rent { flex: 1; font-family: 'Raleway', sans-serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--gold); color: var(--cream); border: none; padding: 9px 0; cursor: pointer; transition: background 0.25s; }
+    .btn-rent:hover { background: var(--gold-light); }
+    .btn-view { font-family: 'Raleway', sans-serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; background: none; color: var(--cream); border: 0.5px solid rgba(250,248,244,0.4); padding: 9px 14px; cursor: pointer; }
+    .card-body { padding: 15px 15px 18px; }
+    .card-brand { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; color: var(--deep); margin-bottom: 4px; line-height: 1.2; }
+    .card-detail { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 12px; font-weight: 300; }
+    .card-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .stars { font-size: 10px; color: var(--gold); letter-spacing: 1px; }
+    .rating-count { font-size: 9px; color: var(--muted); }
+    .card-pricing { display: flex; align-items: baseline; justify-content: space-between; }
+    .card-price { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 300; color: var(--deep); }
+    .card-unit { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-left: 3px; }
+    .card-avail { font-size: 9px; letter-spacing: 0.08em; }
+    .avail-now { color: #6B8F5E; }
+    .avail-soon { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 0.5px solid var(--border); padding: 56px 60px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; background: var(--cream); }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.25em; color: var(--deep); margin-bottom: 18px; }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { font-size: 11px; color: var(--muted); line-height: 1.8; font-weight: 300; max-width: 240px; }
+    .footer-col-title { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--deep); margin-bottom: 20px; font-weight: 500; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 0.5px solid var(--border); padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+    .footer-langs { display: flex; gap: 20px; }
+    .footer-lang { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; cursor: pointer; transition: color 0.3s; background: none; border: none; font-family: 'Raleway', sans-serif; }
+    .footer-lang:hover, .footer-lang.active { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 400px; }
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-left { padding: 48px 24px; }
+      .hero-headline { font-size: 48px; }
+      .section { padding: 64px 24px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .lender-section { grid-template-columns: 1fr; }
+      .bag-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px 60px; }
+      .bags-grid { grid-template-columns: 1fr 1fr; }
+      .bags-grid .bag-card-f:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      footer { grid-template-columns: 1fr 1fr; padding: 40px 24px; }
+      .filters { padding: 0 24px 24px; }
+      .pg-head { padding: 40px 24px 20px; }
+      .featured-section { padding: 64px 24px; }
+      .why-section { padding: 64px 24px; }
+      .lender-card { padding: 48px 32px; }
+    }
+    @media (max-width: 600px) {
+      .bag-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .steps::before { display: none; }
+      footer { grid-template-columns: 1fr; }
+      .bags-grid { grid-template-columns: 1fr; }
+      .bags-grid .bag-card-f:nth-child(1) { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="top">
+    <a href="#top" class="nav-logo">HARU<span>BAG</span></a>
+    <ul class="nav-links">
+      <li><a href="#collection" class="active">Explore</a></li>
+      <li><a href="#featured">Collections</a></li>
+      <li><a href="#lend">Lend Your Bag</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-ghost">Sign In</button>
+      <button class="btn-solid">Join Free</button>
+    </div>
+  </nav>
+
+  <!-- ════════════ HERO ════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">The Luxury Rental Marketplace</p>
+      <h1 class="hero-headline">Carry <em>iconic</em><br>bags, without<br>owning them</h1>
+      <p class="hero-sub">Discover rare and coveted handbags from fellow collectors. Rent for a day, a week, or longer — then return. Effortless luxury, sustainably shared.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Browse Collections</button>
+        <button class="btn-text" onclick="document.getElementById('lend').scrollIntoView({behavior:'smooth'})">Lend Your Bag</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2,400+</div>
+          <div class="stat-label">Luxury Pieces</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div>
+          <div class="stat-num">140+</div>
+          <div class="stat-label">Verified Brands</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div>
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg"></div>
+      <div class="hero-badge">
+        <span class="badge-text-top">From</span>
+        <span class="badge-main">₩89k</span>
+        <span class="badge-sub">per day</span>
+      </div>
+      <div class="hero-img-grid">
+        <div class="img-card">
+          <svg width="100%" height="100%" viewBox="0 0 200 180" fill="none"><rect width="200" height="180" fill="#2C2820"/><rect x="40" y="55" width="120" height="80" rx="3" fill="#5C4A35" stroke="#B8975A" stroke-width="0.5"/><rect x="65" y="35" width="30" height="24" rx="2" fill="none" stroke="#B8975A" stroke-width="0.8"/><rect x="105" y="35" width="30" height="24" rx="2" fill="none" stroke="#B8975A" stroke-width="0.8"/><rect x="88" y="55" width="24" height="16" rx="2" fill="#B8975A"/><rect x="92" y="59" width="16" height="8" rx="1" fill="#8A6A3A"/><line x1="40" y1="90" x2="160" y2="90" stroke="#B8975A" stroke-width="0.5" opacity="0.4"/><circle cx="100" cy="90" r="3" fill="#B8975A"/></svg>
+          <div class="bag-label"><span class="bag-brand">Hermès</span><span class="bag-price">₩240k/day</span></div>
+        </div>
+        <div class="img-card">
+          <svg width="100%" height="100%" viewBox="0 0 200 320" fill="none"><rect width="200" height="320" fill="#1F1C18"/><rect x="35" y="80" width="130" height="140" rx="4" fill="#111" stroke="#B8975A" stroke-width="0.5"/><path d="M75 80 Q100 50 125 80" stroke="#B8975A" stroke-width="1" fill="none"/><circle cx="100" cy="150" r="18" fill="none" stroke="#B8975A" stroke-width="0.8"/><line x1="100" y1="137" x2="100" y2="163" stroke="#B8975A" stroke-width="0.8"/><line x1="87" y1="150" x2="113" y2="150" stroke="#B8975A" stroke-width="0.8"/></svg>
+          <div class="bag-label"><span class="bag-brand">Chanel</span><span class="bag-price">₩180k/day</span></div>
+        </div>
+        <div class="img-card">
+          <svg width="100%" height="100%" viewBox="0 0 200 180" fill="none"><rect width="200" height="180" fill="#2A2118"/><rect x="30" y="50" width="140" height="100" rx="2" fill="#7B5E38" stroke="#D4B882" stroke-width="0.5"/><rect x="80" y="38" width="40" height="16" rx="8" fill="none" stroke="#D4B882" stroke-width="0.8"/><rect x="92" y="44" width="16" height="6" rx="3" fill="#D4B882" opacity="0.7"/><rect x="30" y="50" width="140" height="12" fill="#6A4F2A" opacity="0.7"/><rect x="30" y="138" width="140" height="12" fill="#6A4F2A" opacity="0.7"/></svg>
+          <div class="bag-label"><span class="bag-brand">Louis Vuitton</span><span class="bag-price">₩130k/day</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span class="marquee-item">Hermès <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Chanel <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Louis Vuitton <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Bottega Veneta <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Prada <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dior <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Gucci <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Celine <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Loewe <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Fendi <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Balenciaga <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Givenchy <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Hermès <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Chanel <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Louis Vuitton <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Bottega Veneta <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Prada <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dior <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Gucci <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Celine <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ════════════ HOW IT WORKS ════════════ -->
+  <section class="section" id="how">
+    <p class="section-eyebrow">The Experience</p>
+    <h2 class="section-title">Effortlessly <em>refined</em></h2>
+    <p class="section-sub">From discovery to doorstep in minutes. Every bag authenticated, every rental insured.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-title">Discover</div><p class="step-desc">Browse our curated collection of authenticated luxury handbags, filtered by brand, size, occasion, or rental period.</p></div>
+      <div class="step"><div class="step-num">02</div><div class="step-title">Reserve</div><p class="step-desc">Select your dates and confirm your rental. Our seamless booking process takes under two minutes.</p></div>
+      <div class="step"><div class="step-num">03</div><div class="step-title">Receive</div><p class="step-desc">Your bag arrives in our signature packaging — authenticated, insured, and immaculately prepared.</p></div>
+      <div class="step"><div class="step-num">04</div><div class="step-title">Return</div><p class="step-desc">Place your bag in the provided packaging. We handle the rest — collection, cleaning, and care.</p></div>
+    </div>
+  </section>
+
+  <!-- ════════════ FEATURED ════════════ -->
+  <section class="featured-section" id="featured">
+    <p class="section-eyebrow">Currently Available</p>
+    <h2 class="section-title" style="color:var(--cream)">Featured <em>pieces</em></h2>
+    <p class="section-sub">Each piece personally verified by our authentication team.</p>
+    <div class="bags-grid">
+      <div class="bag-card-f">
+        <div class="bci"><svg width="100%" height="100%" viewBox="0 0 400 560" fill="none"><rect width="400" height="560" fill="#1A1714"/><rect x="80" y="155" width="240" height="220" rx="6" fill="#3D2E1E" stroke="#B8975A" stroke-width="0.7"/><path d="M140 155 Q140 95 200 95 Q260 95 260 155" stroke="#B8975A" stroke-width="1.2" fill="none"/><circle cx="200" cy="265" r="28" fill="none" stroke="#D4B882" stroke-width="1"/><rect x="196" y="243" width="8" height="44" fill="#D4B882" opacity="0.8"/><rect x="178" y="261" width="44" height="8" fill="#D4B882" opacity="0.8"/><line x1="80" y1="245" x2="320" y2="245" stroke="#B8975A" stroke-width="0.5" opacity="0.3"/></svg></div>
+        <div class="bco"><button class="overlay-btn">View &amp; Rent</button></div>
+        <div class="bag-info"><div class="bag-info-brand">Chanel — 2023</div><div class="bag-info-name">Classic Flap Medium</div><div class="bag-info-row"><span class="bag-info-price">₩180,000 / day</span><span class="bag-info-duration">Available now</span></div></div>
+      </div>
+      <div class="bag-card-f">
+        <div class="bci" style="min-height:220px"><svg width="100%" height="100%" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#211D19"/><rect x="30" y="60" width="140" height="100" rx="2" fill="#4A3728" stroke="#B8975A" stroke-width="0.5"/><rect x="60" y="38" width="80" height="26" rx="13" fill="none" stroke="#D4B882" stroke-width="0.8"/><rect x="88" y="58" width="24" height="6" fill="#2C2820"/><rect x="85" y="63" width="30" height="16" rx="2" fill="#B8975A"/></svg></div>
+        <div class="bco"><button class="overlay-btn">View &amp; Rent</button></div>
+        <div class="bag-info"><div class="bag-info-brand">Louis Vuitton</div><div class="bag-info-name">Neverfull MM</div><div class="bag-info-row"><span class="bag-info-price">₩130,000 / day</span><span class="bag-info-duration">Available now</span></div></div>
+      </div>
+      <div class="bag-card-f">
+        <div class="bci" style="min-height:220px"><svg width="100%" height="100%" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#1C1A17"/><rect x="40" y="50" width="120" height="110" rx="3" fill="#4E3A28" stroke="#C4A46A" stroke-width="0.5"/><rect x="85" y="38" width="30" height="16" rx="2" fill="none" stroke="#D4B882" stroke-width="0.7"/><rect x="93" y="50" width="14" height="5" fill="#1C1A17"/><circle cx="100" cy="105" r="8" fill="none" stroke="#D4B882" stroke-width="0.8"/></svg></div>
+        <div class="bco"><button class="overlay-btn">View &amp; Rent</button></div>
+        <div class="bag-info"><div class="bag-info-brand">Prada</div><div class="bag-info-name">Re-Edition 2005</div><div class="bag-info-row"><span class="bag-info-price">₩95,000 / day</span><span class="bag-info-duration">Available now</span></div></div>
+      </div>
+      <div class="bag-card-f">
+        <div class="bci" style="min-height:220px"><svg width="100%" height="100%" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#1E1B16"/><rect x="35" y="65" width="130" height="90" rx="3" fill="#594436" stroke="#B8975A" stroke-width="0.5"/><path d="M70 65 L70 45 Q100 30 130 45 L130 65" stroke="#D4B882" stroke-width="1" fill="none"/><circle cx="100" cy="110" r="12" fill="none" stroke="#B8975A" stroke-width="0.8"/></svg></div>
+        <div class="bco"><button class="overlay-btn">View &amp; Rent</button></div>
+        <div class="bag-info"><div class="bag-info-brand">Bottega Veneta</div><div class="bag-info-name">Jodie Intrecciato</div><div class="bag-info-row"><span class="bag-info-price">₩160,000 / day</span><span class="bag-info-duration">Available now</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ WHY ════════════ -->
+  <section class="why-section">
+    <div class="why-grid">
+      <div>
+        <p class="section-eyebrow" style="text-align:left">Why Harubag</p>
+        <h2 class="section-title" style="text-align:left;font-size:40px;margin-bottom:14px">Luxury <em>redefined</em><br>for today</h2>
+        <p class="section-sub" style="text-align:left;margin-left:0;margin-bottom:48px">Access the world's most coveted bags without compromise — authenticated, insured, and delivered with care.</p>
+        <div class="why-features">
+          <div class="why-item">
+            <div class="why-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.4 7.6L18 8.5L14 12.4L15 18L10 15.3L5 18L6 12.4L2 8.5L7.6 7.6L10 2Z" stroke="#B8975A" stroke-width="0.8" fill="none"/></svg></div>
+            <div><div class="why-item-title">Expert Authentication</div><p class="why-item-desc">Every piece is verified by our team of luxury goods specialists before being listed on the platform.</p></div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L4 6V11C4 14.3 6.6 17.4 10 18C13.4 17.4 16 14.3 16 11V6L10 2Z" stroke="#B8975A" stroke-width="0.8" fill="none"/></svg></div>
+            <div><div class="why-item-title">Full Insurance Coverage</div><p class="why-item-desc">Rent with peace of mind. Every rental is fully insured — for both the renter and the bag's owner.</p></div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#B8975A" stroke-width="0.8"/><path d="M10 7V10L12 12" stroke="#B8975A" stroke-width="0.8" stroke-linecap="round"/></svg></div>
+            <div><div class="why-item-title">Same-day Delivery</div><p class="why-item-desc">Express delivery available in Seoul and major cities. Book by noon, receive by evening.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual">
+        <div class="why-visual-card">
+          <div class="why-accent">Authenticated</div>
+          <svg width="65%" height="65%" viewBox="0 0 280 320" fill="none"><rect x="40" y="80" width="200" height="160" rx="4" fill="#2C2418" stroke="#B8975A" stroke-width="0.8"/><path d="M100 80 Q100 30 140 30 Q180 30 180 80" stroke="#D4B882" stroke-width="1.5" fill="none"/><circle cx="140" cy="160" r="30" fill="none" stroke="#B8975A" stroke-width="1"/><path d="M127 160 L136 169 L155 150" stroke="#D4B882" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="40" y1="130" x2="240" y2="130" stroke="#B8975A" stroke-width="0.5" opacity="0.3"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ DUAL CTA ════════════ -->
+  <section class="lender-section" id="lend">
+    <div class="lender-card lender-card-left">
+      <div>
+        <div class="lender-tag">For Collectors</div>
+        <h3 class="lender-heading">Let your bags<br>earn for you</h3>
+        <p class="lender-desc">Your collection is an asset. List your bags on Harubag and earn while they're not in use — fully insured, fully managed.</p>
+      </div>
+      <button class="btn-white">Start Lending →</button>
+    </div>
+    <div class="lender-card lender-card-right">
+      <div>
+        <div class="lender-tag">For Renters</div>
+        <h3 class="lender-heading">Wear the icon.<br>Return it after.</h3>
+        <p class="lender-desc">Access rare and coveted bags for any occasion — a gala, a trip, or just a Tuesday — without the commitment of ownership.</p>
+      </div>
+      <button class="btn-dark" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Explore Collection →</button>
+    </div>
+  </section>
+
+  <!-- ════════════ PRODUCT GRID ════════════ -->
+  <section id="collection">
+    <div class="pg-head">
+      <div>
+        <div class="pg-eyebrow">The Collection</div>
+        <h2 class="pg-title">Rent <em>iconic</em> bags</h2>
+      </div>
+      <div class="pg-count" id="pgCount">12 pieces available</div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+      <button class="filter-btn" onclick="filterCards('chanel',this)">Chanel</button>
+      <button class="filter-btn" onclick="filterCards('hermes',this)">Hermès</button>
+      <button class="filter-btn" onclick="filterCards('lv',this)">Louis Vuitton</button>
+      <button class="filter-btn" onclick="filterCards('gucci',this)">Gucci</button>
+      <button class="filter-btn" onclick="filterCards('dior',this)">Dior</button>
+      <button class="filter-btn" onclick="filterCards('other',this)">More Brands</button>
+      <div class="filter-divider"></div>
+      <select class="sort-select"><option>Sort: Featured</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Most Popular</option></select>
+    </div>
+
+    <div class="bag-grid" id="grid">
+
+      <div class="bag-card" data-brand="chanel">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="15" y="44" width="110" height="86" rx="3" fill="#111" stroke="#B8975A" stroke-width="0.6"/><path d="M45 44 Q70 14 95 44" stroke="#B8975A" stroke-width="1" fill="none"/><circle cx="70" cy="87" r="16" fill="none" stroke="#D4B882" stroke-width="0.8"/><line x1="70" y1="74" x2="70" y2="100" stroke="#D4B882" stroke-width="0.8"/><line x1="57" y1="87" x2="83" y2="87" stroke="#D4B882" stroke-width="0.8"/><rect x="15" y="44" width="110" height="6" fill="rgba(0,0,0,0.3)"/><rect x="15" y="124" width="110" height="6" fill="rgba(0,0,0,0.3)"/></svg></div><span class="card-badge badge-hot">Most Rented</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Chanel</div><div class="card-name">Classic Flap Medium</div><div class="card-detail">Black Caviar · Gold Hardware · 2023</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(48)</span></div><div class="card-pricing"><div><span class="card-price">₩180,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="hermes">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="20" y="54" width="100" height="76" rx="2" fill="#6B4C2A" stroke="#D4B882" stroke-width="0.6"/><rect x="50" y="34" width="20" height="22" rx="2" fill="none" stroke="#B8975A" stroke-width="0.7"/><rect x="70" y="34" width="20" height="22" rx="2" fill="none" stroke="#B8975A" stroke-width="0.7"/><rect x="58" y="54" width="24" height="14" rx="2" fill="#B8975A"/><rect x="62" y="58" width="16" height="7" rx="1" fill="#8A6A3A"/><line x1="20" y1="84" x2="120" y2="84" stroke="#B8975A" stroke-width="0.4" opacity="0.5"/></svg></div><span class="card-badge badge-new">Exclusive</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Hermès</div><div class="card-name">Birkin 30</div><div class="card-detail">Fauve Barenia · Palladium · 2022</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(31)</span></div><div class="card-pricing"><div><span class="card-price">₩320,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="lv">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="15" y="50" width="110" height="86" rx="2" fill="#7B5E38" stroke="#D4B882" stroke-width="0.5"/><pattern id="lv1" patternUnits="userSpaceOnUse" width="18" height="18"><text x="1" y="11" font-size="7" fill="#B8975A" opacity="0.35" font-family="serif">LV</text></pattern><rect x="15" y="50" width="110" height="86" fill="url(#lv1)"/><rect x="55" y="32" width="30" height="20" rx="10" fill="none" stroke="#D4B882" stroke-width="0.7"/><rect x="68" y="48" width="4" height="5" fill="#5A3E20"/><rect x="15" y="50" width="110" height="9" fill="rgba(0,0,0,0.25)"/><rect x="15" y="127" width="110" height="9" fill="rgba(0,0,0,0.25)"/></svg></div><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Louis Vuitton</div><div class="card-name">Neverfull MM</div><div class="card-detail">Monogram Canvas · Rose Ballerine</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(62)</span></div><div class="card-pricing"><div><span class="card-price">₩130,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="dior">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><path d="M30 90 Q30 50 70 44 Q110 50 110 90 L105 130 Q70 140 35 130 Z" fill="#1C1C1C" stroke="#B8975A" stroke-width="0.6"/><path d="M50 44 Q70 20 90 44" stroke="#D4B882" stroke-width="1" fill="none"/><rect x="62" y="84" width="16" height="20" rx="2" fill="#B8975A"/><rect x="66" y="88" width="8" height="12" rx="1" fill="#8A6A3A"/></svg></div><span class="card-badge badge-new">New In</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Christian Dior</div><div class="card-name">Saddle Bag</div><div class="card-detail">Black Grained Calfskin · Gold · 2024</div><div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(27)</span></div><div class="card-pricing"><div><span class="card-price">₩195,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-soon">2 days left</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="gucci">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="20" y="54" width="100" height="72" rx="4" fill="#2E1A0E" stroke="#B8975A" stroke-width="0.6"/><path d="M45 54 L45 37 Q70 27 95 37 L95 54" fill="none" stroke="#D4B882" stroke-width="0.8"/><text x="50" y="96" font-size="18" fill="#B8975A" font-weight="bold" font-family="serif">GG</text><rect x="20" y="54" width="100" height="8" fill="rgba(0,0,0,0.3)"/></svg></div><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Gucci</div><div class="card-name">GG Marmont Small</div><div class="card-detail">Matelassé Velvet · Dusty Pink · 2023</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(39)</span></div><div class="card-pricing"><div><span class="card-price">₩115,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="other">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><ellipse cx="70" cy="92" rx="52" ry="48" fill="#4E3A28" stroke="#B8975A" stroke-width="0.6"/><path d="M45 66 Q45 42 70 42 Q95 42 95 66" fill="none" stroke="#D4B882" stroke-width="0.8"/><line x1="35" y1="82" x2="105" y2="82" stroke="#6B4E32" stroke-width="3" opacity="0.5"/><line x1="35" y1="92" x2="105" y2="92" stroke="#6B4E32" stroke-width="3" opacity="0.5"/><line x1="35" y1="102" x2="105" y2="102" stroke="#6B4E32" stroke-width="3" opacity="0.5"/><line x1="50" y1="66" x2="50" y2="118" stroke="#6B4E32" stroke-width="3" opacity="0.5"/><line x1="70" y1="66" x2="70" y2="118" stroke="#6B4E32" stroke-width="3" opacity="0.5"/><line x1="90" y1="66" x2="90" y2="118" stroke="#6B4E32" stroke-width="3" opacity="0.5"/></svg></div><span class="card-badge badge-hot">Popular</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Bottega Veneta</div><div class="card-name">Jodie Intrecciato</div><div class="card-detail">Woven Leather · Caramel · 2023</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(44)</span></div><div class="card-pricing"><div><span class="card-price">₩160,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="other">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="30" y="57" width="80" height="74" rx="3" fill="#2A2A2A" stroke="#B8975A" stroke-width="0.6"/><rect x="50" y="38" width="40" height="21" rx="2" fill="none" stroke="#D4B882" stroke-width="0.7"/><rect x="64" y="57" width="12" height="5" fill="#1A1A1A"/><circle cx="70" cy="94" r="10" fill="none" stroke="#D4B882" stroke-width="0.7"/></svg></div><span class="card-badge badge-new">New In</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Prada</div><div class="card-name">Re-Edition 2005</div><div class="card-detail">Nylon · Black · Silver Hardware</div><div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(22)</span></div><div class="card-pricing"><div><span class="card-price">₩95,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="hermes">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="22" y="55" width="96" height="80" rx="2" fill="#5A3E28" stroke="#D4B882" stroke-width="0.6"/><path d="M50 55 L50 33 L90 33 L90 55" fill="none" stroke="#B8975A" stroke-width="0.8"/><rect x="63" y="55" width="14" height="18" rx="1" fill="#B8975A"/><rect x="66" y="59" width="8" height="10" rx="1" fill="#8A6A3A"/><line x1="22" y1="95" x2="118" y2="95" stroke="#B8975A" stroke-width="0.4" opacity="0.4"/></svg></div><span class="card-badge badge-few">2 Left</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Hermès</div><div class="card-name">Kelly 28</div><div class="card-detail">Epsom Leather · Gold · Sellier</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(19)</span></div><div class="card-pricing"><div><span class="card-price">₩290,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-soon">Last 2!</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="other">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="25" y="51" width="90" height="78" rx="2" fill="#E8E0D4" stroke="#B8975A" stroke-width="0.6"/><rect x="55" y="33" width="30" height="20" rx="1" fill="none" stroke="#B8975A" stroke-width="0.7"/><rect x="63" y="50" width="14" height="4" fill="#E8E0D4"/><rect x="61" y="82" width="18" height="16" rx="1" fill="#B8975A"/><rect x="64" y="86" width="12" height="8" rx="1" fill="#8A6A3A"/></svg></div><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Celine</div><div class="card-name">Box Bag Small</div><div class="card-detail">Smooth Calfskin · Nude · Gold</div><div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(16)</span></div><div class="card-pricing"><div><span class="card-price">₩140,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="other">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="22" y="57" width="96" height="74" rx="3" fill="#C8A882" stroke="#B8975A" stroke-width="0.6"/><line x1="22" y1="75" x2="118" y2="75" stroke="#A88855" stroke-width="0.8"/><line x1="22" y1="93" x2="118" y2="93" stroke="#A88855" stroke-width="0.8"/><line x1="22" y1="111" x2="118" y2="111" stroke="#A88855" stroke-width="0.8"/><line x1="40" y1="57" x2="40" y2="131" stroke="#A88855" stroke-width="0.8"/><line x1="60" y1="57" x2="60" y2="131" stroke="#A88855" stroke-width="0.8"/><line x1="80" y1="57" x2="80" y2="131" stroke="#A88855" stroke-width="0.8"/><line x1="100" y1="57" x2="100" y2="131" stroke="#A88855" stroke-width="0.8"/><path d="M52 39 Q70 29 88 39 L88 57 L52 57 Z" fill="none" stroke="#D4B882" stroke-width="0.7"/></svg></div><span class="card-badge badge-hot">Hot</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Saint Laurent</div><div class="card-name">Loulou Puffer</div><div class="card-detail">Quilted Lambskin · Camel · 2024</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(33)</span></div><div class="card-pricing"><div><span class="card-price">₩125,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="chanel">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><path d="M25 82 Q25 50 70 47 Q115 50 115 82 L110 126 Q70 136 30 126 Z" fill="#2C2C2C" stroke="#B8975A" stroke-width="0.6"/><path d="M50 47 Q50 26 70 26 Q90 26 90 47" fill="none" stroke="#D4B882" stroke-width="0.9"/><circle cx="70" cy="88" r="10" fill="none" stroke="#B8975A" stroke-width="0.7"/></svg></div><span class="card-badge badge-new">2022 FW</span><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Chanel</div><div class="card-name">22 Bag Large</div><div class="card-detail">Shiny Calfskin · Black · Silver</div><div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(28)</span></div><div class="card-pricing"><div><span class="card-price">₩210,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-soon">3 days left</span></div></div>
+      </div>
+
+      <div class="bag-card" data-brand="other">
+        <div class="card-img"><div class="card-img-inner"><svg width="140" height="168" viewBox="0 0 140 168" fill="none"><rect x="20" y="49" width="100" height="82" rx="2" fill="#8C6B4A" stroke="#B8975A" stroke-width="0.6"/><line x1="70" y1="49" x2="70" y2="131" stroke="#D4B882" stroke-width="0.5" opacity="0.6"/><line x1="20" y1="90" x2="120" y2="90" stroke="#D4B882" stroke-width="0.5" opacity="0.6"/><rect x="55" y="32" width="30" height="19" rx="2" fill="none" stroke="#D4B882" stroke-width="0.6"/><rect x="63" y="49" width="14" height="4" fill="#6A4F32"/><circle cx="70" cy="90" r="5" fill="#D4B882" opacity="0.8"/></svg></div><button class="card-wish">♡</button><div class="card-actions"><button class="btn-rent">Rent Now</button><button class="btn-view">View</button></div></div>
+        <div class="card-body"><div class="card-brand">Loewe</div><div class="card-name">Puzzle Bag Medium</div><div class="card-detail">Classic Calf · Tan · Gold · 2023</div><div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(21)</span></div><div class="card-pricing"><div><span class="card-price">₩150,000</span><span class="card-unit">/ day</span></div><span class="card-avail avail-now">Available</span></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer>
+    <div>
+      <div class="footer-logo">HARU<span>BAG</span></div>
+      <p class="footer-tagline">The premier marketplace for authenticated luxury handbag rentals. Discover, rent, and share in the world of fine fashion.</p>
+    </div>
+    <div><div class="footer-col-title">Explore</div><ul class="footer-links"><li><a href="#">New Arrivals</a></li><li><a href="#">Collections</a></li><li><a href="#">Brands</a></li><li><a href="#">Occasions</a></li></ul></div>
+    <div><div class="footer-col-title">Account</div><ul class="footer-links"><li><a href="#">Sign In</a></li><li><a href="#">Create Account</a></li><li><a href="#">List Your Bag</a></li><li><a href="#">My Rentals</a></li></ul></div>
+    <div><div class="footer-col-title">Support</div><ul class="footer-links"><li><a href="#">How It Works</a></li><li><a href="#">Authentication</a></li><li><a href="#">Insurance Policy</a></li><li><a href="#">Contact Us</a></li></ul></div>
+  </footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Harubag. All rights reserved.</span>
+    <div class="footer-langs">
+      <button class="footer-lang active">KR</button>
+      <button class="footer-lang">EN</button>
+      <button class="footer-lang">JP</button>
+    </div>
+  </div>
+
+  <script>
+    function filterCards(brand, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.bag-card').forEach(card => {
+        card.style.display = (brand === 'all' || card.dataset.brand === brand) ? '' : 'none';
+      });
+      const visible = document.querySelectorAll('.bag-card:not([style*="none"])').length;
+      document.getElementById('pgCount').textContent = visible + ' pieces available';
+    }
+
+    document.querySelectorAll('.card-wish').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+        btn.style.color = btn.textContent === '♥' ? '#B8975A' : '';
+      });
+    });
+
+    document.querySelectorAll('.footer-lang').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.footer-lang').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
